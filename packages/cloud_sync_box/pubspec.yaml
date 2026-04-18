@@ -1,0 +1,25 @@
+name: cloud_sync_box
+description: >-
+  Box Content API adapter for the cloud_sync family. Implements
+  StorageAdapter against Box's ID-based API, translating path-based sync
+  operations via a lazy path-to-ID resolver with in-memory caching.
+version: 0.1.0
+repository: https://github.com/arcanelabsio/cloud_sync
+issue_tracker: https://github.com/arcanelabsio/cloud_sync/issues
+topics:
+  - box
+  - sync
+  - storage
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  cloud_sync_core: ^0.1.0
+  crypto: ^3.0.6
+  http: ^1.4.0
+  meta: ^1.16.0
+
+dev_dependencies:
+  lints: ^5.1.0
+  test: ^1.25.0

@@ -2,7 +2,7 @@
 
 ## Current phase
 
-**Phase 2 — COMPLETE.** `cloud_sync_s3 0.1.0` added. Hand-rolled SigV4 matches AWS's published S3 test vector byte-for-byte. Supports AWS + all major S3-compatible services via endpoint override.
+**Phase 3 — COMPLETE.** `cloud_sync_box 0.1.0` added. All planned connectors have landed. Ready for publish-workflow setup and GitHub remote.
 
 ## Phase status
 
@@ -10,14 +10,15 @@
 |---|---|---|
 | 1 | `cloud_sync_core`, `cloud_sync_drive` | ✅ Done (90 tests) |
 | 2 | `cloud_sync_s3` | ✅ Done (48 tests) |
-| 3 | `cloud_sync_box` | Not started |
+| 3 | `cloud_sync_box` | ✅ Done (19 tests) |
 
 ## Test counts
 
 - `cloud_sync_core`: 62 tests passing
 - `cloud_sync_drive`: 28 tests passing
 - `cloud_sync_s3`: 48 tests passing
-- **Total**: 138 tests passing
+- `cloud_sync_box`: 19 tests passing
+- **Total**: 157 tests passing across 4 packages
 
 ## cloud_sync_s3 design notes
 
@@ -42,13 +43,21 @@
 - **Large-file ceiling**: Keep the ~50MB limit in v1 across all adapters. Streaming refactor is deferred (would require breaking changes to `SyncEngine`). Document the limit in each adapter README.
 - **GitHub remote**: Hold. Create the `arcanelabsio/cloud_sync` repo and push after all planned connectors land locally.
 
+## cloud_sync_box design notes
+
+- `BoxConfig`: rootFolderId + overridable baseUrl/uploadUrl (api.box.com vs upload.box.com are separate hosts in Box's real API).
+- `BoxAuthClient`: Bearer-token helper. JWT App Auth consumers build their own `http.Client`.
+- `BoxPathResolver`: lazy recursive walk from rootFolderId populates `path→id` cache. `ensureParent()` creates missing folder segments on demand. Single-client assumption — call `reset()` if external mutations occurred.
+- `BoxAdapter`: picks upload-new vs upload-version based on resolver.resolveExisting. Stores SHA256 at `/files/{id}/metadata/global/properties` (POST on create, PUT with JSON Patch on 409 conflict).
+- 50MB file ceiling: uses Box's single-request upload endpoint, not chunked.
+
 ## Next
 
-1. Phase 3: `cloud_sync_box` — Box Content API, OAuth2 Bearer only, path↔ID resolver.
-2. Wire up `.github/workflows/publish.yaml` (tag-triggered) before creating the GitHub remote.
-3. Create GitHub repo + push after Phase 3 lands.
+1. Wire up `.github/workflows/publish.yaml` (tag-triggered) with tag-to-package mapping (e.g., `v0.1.0-core`, `v0.1.0-drive`, `v0.1.0-s3`, `v0.1.0-box`).
+2. Create GitHub repo `arcanelabsio/cloud_sync` and push.
+3. Tag releases and let CI publish to pub.dev.
 4. Freeze pub.dev `drive_sync_flutter 1.2.0` — add deprecation note pointing at `cloud_sync_drive` once published.
 
 ## Last updated
 
-2026-04-18 — Phase 2 (S3) complete, ready for commit.
+2026-04-18 — Phase 3 (Box) complete. All 4 packages ready.
