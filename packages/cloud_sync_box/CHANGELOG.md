@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.1
 
 Initial release. Box Content API adapter for the cloud_sync family.
 

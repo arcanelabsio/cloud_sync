@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.1
 
 Initial release as part of the `cloud_sync` family. Behavior ported from `drive_sync_flutter 1.2.0`.
 

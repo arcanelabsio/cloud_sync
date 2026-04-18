@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.1
 
 Initial release. S3 + S3-compatible storage adapter for the cloud_sync family.
 

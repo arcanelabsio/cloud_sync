@@ -1,4 +1,4 @@
-## 0.1.0
+## 0.1.1
 
 Initial release. Storage-agnostic core extracted from `drive_sync_flutter 1.2.0`.
 

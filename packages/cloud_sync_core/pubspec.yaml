@@ -3,7 +3,7 @@ description: >-
   Storage-agnostic core for the cloud_sync family. Defines StorageAdapter,
   SyncEngine, SyncClient, ManifestDiffer, and conflict resolution — shared
   by every backend adapter.
-version: 0.1.0
+version: 0.1.1
 repository: https://github.com/arcanelabsio/cloud_sync
 issue_tracker: https://github.com/arcanelabsio/cloud_sync/issues
 topics:
