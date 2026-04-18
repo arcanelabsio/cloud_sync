@@ -1,0 +1,65 @@
+name: Feature request
+description: Propose a new capability, extension, or improvement.
+title: "[feature] "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For **structural changes** — new backend adapter, changes to the `StorageAdapter` contract, manifest shape changes, conflict-resolution semantics — please read [`docs/adr/README.md`](../../docs/adr/README.md) first. Those need an ADR. This issue is the right place to start the conversation.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package does this target?
+      options:
+        - cloud_sync_core
+        - cloud_sync_drive
+        - cloud_sync_s3
+        - cloud_sync_box
+        - New adapter (propose one)
+        - Cross-cutting / tooling
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does this solve?
+      description: The user-visible pain point, not the proposed solution.
+      placeholder: "I want to sync files larger than 50MB to S3, but today the adapter …"
+    validations:
+      required: true
+  - type: textarea
+    id: proposed-direction
+    attributes:
+      label: Suggested direction (optional)
+      description: If you have a proposal in mind, describe it. Clearly separate the problem from the solution.
+    validations:
+      required: false
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: What else did you think about? Saying "I considered X but Y" is often the fastest way to alignment.
+    validations:
+      required: false
+  - type: dropdown
+    id: stakes
+    attributes:
+      label: Stakes
+      description: How load-bearing is this change?
+      options:
+        - Small quality-of-life improvement
+        - Medium — new feature, no contract changes
+        - High — changes the StorageAdapter / manifest / conflict-resolution contract (needs ADR)
+        - High — adds a new backend adapter (needs ADR + new package)
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I've searched existing issues and discussions.
+          required: true
+        - label: If this is a contract / structural change, I understand an ADR will be required before merge.
+          required: true

@@ -15,3 +15,6 @@ Thumbs.db
 
 # Melos
 pubspec_overrides.yaml
+
+# graphify generated output
+graphify-out/

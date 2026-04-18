@@ -1,0 +1,20 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Security vulnerability
+    url: mailto:apps@arcanelabs.info
+    about: Do NOT open a public issue. Email apps@arcanelabs.info. See SECURITY.md.
+  - name: Other Arcane Labs projects
+    url: https://github.com/arcanelabsio
+    about: Browse sibling projects and the pattern registry.
+  - name: pub.dev — cloud_sync_core
+    url: https://pub.dev/packages/cloud_sync_core
+    about: Core sync engine package.
+  - name: pub.dev — cloud_sync_drive
+    url: https://pub.dev/packages/cloud_sync_drive
+    about: Google Drive adapter package.
+  - name: pub.dev — cloud_sync_s3
+    url: https://pub.dev/packages/cloud_sync_s3
+    about: AWS S3 + S3-compatible adapter package.
+  - name: pub.dev — cloud_sync_box
+    url: https://pub.dev/packages/cloud_sync_box
+    about: Box Content API adapter package.

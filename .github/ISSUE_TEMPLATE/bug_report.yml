@@ -1,0 +1,75 @@
+name: Bug report
+description: Something broke, produced a wrong result, or behaved unexpectedly.
+title: "[bug] "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. Please do **not** include secrets, auth tokens, personal data, or file contents you didn't mean to share — we'll treat this issue as public.
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package?
+      description: Bugs are almost always specific to one package. If unsure, pick the one whose API you were calling.
+      options:
+        - cloud_sync_core
+        - cloud_sync_drive
+        - cloud_sync_s3
+        - cloud_sync_box
+        - Unsure / cross-package
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      description: The `version:` you have in `pubspec.yaml` for the affected package.
+      placeholder: "0.1.1"
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: Describe the unexpected behavior. What did you see?
+      placeholder: "SyncClient.sync() returned filesUploaded=0 for a folder that clearly had new files."
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect instead?
+      placeholder: "filesUploaded should have included the new files, since they don't exist in the manifest."
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal code + steps. Scrub any auth tokens before pasting.
+      placeholder: |
+        1. Create DriveAdapter.appFiles(folderName: 'MyApp', subPath: 'x')
+        2. Write 3 files to the local path
+        3. Call client.sync(localPath: ...)
+        4. Expected 3 uploaded, got 0
+      render: markdown
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Dart / Flutter version, OS, anything else relevant.
+      placeholder: "Dart 3.5.0, Flutter 3.24, macOS 14.4"
+    validations:
+      required: true
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I've searched existing issues and this isn't a duplicate.
+          required: true
+        - label: This is not a security vulnerability. (Those go to apps@arcanelabs.info — see SECURITY.md.)
+          required: true
