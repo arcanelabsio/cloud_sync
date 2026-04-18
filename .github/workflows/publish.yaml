@@ -1,0 +1,99 @@
+name: Publish
+
+# Triggered by per-package tags of the form `<package>-v<version>`,
+# e.g. `cloud_sync_core-v0.1.0`, `cloud_sync_drive-v0.1.0`.
+# Each tag publishes exactly one package — packages release independently.
+on:
+  push:
+    tags:
+      - 'cloud_sync_core-v*.*.*'
+      - 'cloud_sync_drive-v*.*.*'
+      - 'cloud_sync_s3-v*.*.*'
+      - 'cloud_sync_box-v*.*.*'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      # `id-token: write` is required for pub.dev OIDC trusted publishing.
+      # Harmless if static credentials are used instead.
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Parse tag → package + version
+        id: parse
+        run: |
+          TAG="${GITHUB_REF_NAME}"
+          PACKAGE="${TAG%-v*}"
+          VERSION="${TAG##*-v}"
+          echo "package=${PACKAGE}" >> "$GITHUB_OUTPUT"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Publishing ${PACKAGE} @ ${VERSION}"
+
+      - name: Verify pubspec.yaml version matches tag
+        working-directory: packages/${{ steps.parse.outputs.package }}
+        run: |
+          PUBSPEC_VERSION=$(awk '/^version:/ {print $2; exit}' pubspec.yaml)
+          if [ "${PUBSPEC_VERSION}" != "${{ steps.parse.outputs.version }}" ]; then
+            echo "::error::Tag version '${{ steps.parse.outputs.version }}' does not match pubspec.yaml version '${PUBSPEC_VERSION}' in ${{ steps.parse.outputs.package }}"
+            exit 1
+          fi
+
+      - name: Activate melos
+        run: dart pub global activate melos
+
+      - name: Bootstrap workspace
+        run: melos bootstrap
+
+      - name: Analyze entire workspace (regression check)
+        run: melos run analyze
+
+      - name: Test entire workspace (regression check)
+        run: melos run test
+
+      - name: Dry-run publish (surface any pub.dev validation errors early)
+        working-directory: packages/${{ steps.parse.outputs.package }}
+        run: dart pub publish --dry-run
+
+      # ----------------------------------------------------------------------
+      # AUTHENTICATION — TO BE FINALIZED
+      # ----------------------------------------------------------------------
+      # The actual publish step depends on the auth method chosen:
+      #
+      # Option A — OIDC trusted publishing (recommended):
+      #   Each package on pub.dev is pre-configured under
+      #   "Admin → Automated publishing" to trust this repo for tag pattern
+      #   "<package>-v{{version}}". Then `dart pub publish` inherits the
+      #   short-lived OIDC token from the GitHub Actions runtime automatically
+      #   (because `permissions: id-token: write` is set above).
+      #
+      #   Add at the end of this job:
+      #       - name: Publish to pub.dev
+      #         working-directory: packages/${{ steps.parse.outputs.package }}
+      #         run: dart pub publish --force
+      #
+      # Option B — static credentials:
+      #   Store PUB_CREDENTIALS_JSON as a repo secret (generated once via
+      #   `dart pub token add https://pub.dev` on a trusted machine).
+      #   Add at the end of this job:
+      #       - name: Write pub credentials
+      #         run: |
+      #           mkdir -p ~/.config/dart
+      #           echo '${{ secrets.PUB_CREDENTIALS_JSON }}' > ~/.config/dart/pub-credentials.json
+      #       - name: Publish to pub.dev
+      #         working-directory: packages/${{ steps.parse.outputs.package }}
+      #         run: dart pub publish --force
+      # ----------------------------------------------------------------------
+
+      - name: Publish placeholder (AUTH METHOD PENDING)
+        run: |
+          echo "::warning::Publish auth method not yet finalized."
+          echo "::warning::Choose OIDC trusted publishing or static credentials,"
+          echo "::warning::then replace this step per the block above."
+          echo "Ready to publish: ${{ steps.parse.outputs.package }} @ ${{ steps.parse.outputs.version }}"
