@@ -28,3 +28,11 @@ scripts:
   publish_dry:
     description: Dry-run publish for all packages
     exec: dart pub publish --dry-run
+
+  tag:
+    description: |
+      Create and push a release tag for a single package.
+      Usage: melos run tag -- <package>
+      <package> is the short name (core, drive, s3, box) or full name.
+      The publish.yaml workflow picks up the pushed tag and handles pub.dev.
+    run: bash scripts/tag.sh
