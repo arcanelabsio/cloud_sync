@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+      - name: Activate melos
+        run: dart pub global activate melos
+      - name: Bootstrap workspace
+        run: melos bootstrap
+      - name: Analyze
+        run: melos run analyze
+      - name: Test
+        run: melos run test

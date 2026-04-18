@@ -1,0 +1,24 @@
+name: cloud_sync_drive
+description: >-
+  Google Drive adapter for the cloud_sync family. Supports drive, drive.file,
+  and drive.appdata scopes. Implements StorageAdapter so it plugs directly
+  into SyncClient.
+version: 0.1.0
+repository: https://github.com/arcanelabsio/cloud_sync
+issue_tracker: https://github.com/arcanelabsio/cloud_sync/issues
+topics:
+  - google-drive
+  - sync
+  - backup
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  cloud_sync_core: ^0.1.0
+  googleapis: ^14.0.0
+  http: ^1.4.0
+
+dev_dependencies:
+  lints: ^5.1.0
+  test: ^1.25.0

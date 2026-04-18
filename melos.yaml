@@ -1,0 +1,30 @@
+name: cloud_sync
+
+packages:
+  - packages/**
+
+command:
+  bootstrap:
+    environment:
+      sdk: ^3.6.0
+
+scripts:
+  analyze:
+    description: Run dart analyze on all packages
+    exec: dart analyze .
+
+  test:
+    description: Run dart test on all packages
+    exec: dart test
+
+  format:
+    description: Check formatting on all packages
+    exec: dart format --set-exit-if-changed .
+
+  format_fix:
+    description: Apply dart format to all packages
+    exec: dart format .
+
+  publish_dry:
+    description: Dry-run publish for all packages
+    exec: dart pub publish --dry-run

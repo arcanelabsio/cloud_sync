@@ -1,0 +1,9 @@
+name: cloud_sync_workspace
+description: Monorepo root for the cloud_sync family of packages.
+publish_to: none
+
+environment:
+  sdk: ^3.6.0
+
+dev_dependencies:
+  melos: ^6.0.0
