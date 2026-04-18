@@ -2,7 +2,7 @@
 
 ## Current phase
 
-**Phase 3 — COMPLETE.** `cloud_sync_box 0.1.0` added. All planned connectors have landed. Ready for publish-workflow setup and GitHub remote.
+**All four packages live on pub.dev at 0.1.1.** Core + Drive + S3 + Box shipped. GitHub repo at `arcanelabsio/cloud_sync`. Release tooling (Makefile + `scripts/tag.sh`) in place. Next: configure OIDC on pub.dev and swap the workflow's placeholder step for the real publish call.
 
 ## Phase status
 
@@ -61,13 +61,30 @@ All four packages: **160/160**.
 - `BoxAdapter`: picks upload-new vs upload-version based on resolver.resolveExisting. Stores SHA256 at `/files/{id}/metadata/global/properties` (POST on create, PUT with JSON Patch on 409 conflict).
 - 50MB file ceiling: uses Box's single-request upload endpoint, not chunked.
 
+## Release workflow
+
+```bash
+# Typical release of a single package:
+# 1. Bump version in packages/<pkg>/pubspec.yaml + update CHANGELOG.md
+# 2. git commit + git push main
+# 3. Preflight (analyze + test + publish dry-run):
+make pre-release
+# 4. Tag + push → publish.yaml picks it up:
+make release PKG=drive   # or: core | s3 | box
+```
+
+`make help` for the full target list. Wraps `melos run` scripts + `scripts/tag.sh`.
+
 ## Next
 
-1. Wire up `.github/workflows/publish.yaml` (tag-triggered) with tag-to-package mapping (e.g., `v0.1.0-core`, `v0.1.0-drive`, `v0.1.0-s3`, `v0.1.0-box`).
-2. Create GitHub repo `arcanelabsio/cloud_sync` and push.
-3. Tag releases and let CI publish to pub.dev.
-4. Freeze pub.dev `drive_sync_flutter 1.2.0` — add deprecation note pointing at `cloud_sync_drive` once published.
+1. Configure OIDC trusted publishing on each of the 4 packages on pub.dev.
+   Admin → Automated publishing → repo `arcanelabsio/cloud_sync`, tag pattern
+   `cloud_sync_<pkg>-v{{version}}`.
+2. Replace the placeholder step in `.github/workflows/publish.yaml` with
+   `dart pub publish --force` so tagged releases auto-publish.
+3. Freeze pub.dev `drive_sync_flutter 1.2.0` — add deprecation note pointing
+   at `cloud_sync_drive`.
 
 ## Last updated
 
-2026-04-18 — Phase 3 (Box) complete. All 4 packages ready.
+2026-04-18 — All 4 packages published at 0.1.1. Make-based release workflow in place.
