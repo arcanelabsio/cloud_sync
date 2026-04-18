@@ -20,6 +20,16 @@
 - `cloud_sync_box`: 19 tests passing
 - **Total**: 157 tests passing across 4 packages
 
+## pub.dev score (pana, local)
+
+All four packages: **160/160**.
+
+- Conventions 30/30 (description length, README, CHANGELOG, MIT LICENSE)
+- Documentation 20/20 (≥20% dartdoc coverage, example/ present)
+- Platform 20/20 (5 of 6 platforms — Web excluded due to `dart:io`, no deduction)
+- Analysis 50/50 (0 errors, 0 warnings, 0 format issues)
+- Dependencies 40/40 (all constraints admit latest major)
+
 ## cloud_sync_s3 design notes
 
 - `AwsSigV4`: stateless signer, validated against AWS's "GET Object with Range" test vector (signature `f0e8bdb87c964420e857bd35b5d6ed310bd44f0170aba48dd91039c6036bdb41`).
