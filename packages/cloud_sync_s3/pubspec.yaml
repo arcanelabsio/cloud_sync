@@ -1,0 +1,27 @@
+name: cloud_sync_s3
+description: >-
+  S3 + S3-compatible adapter for the cloud_sync family. Supports AWS S3,
+  Cloudflare R2, MinIO, Backblaze B2, Wasabi, and DO Spaces via custom
+  endpoint override. Implements StorageAdapter from cloud_sync_core.
+version: 0.1.0
+repository: https://github.com/arcanelabsio/cloud_sync
+issue_tracker: https://github.com/arcanelabsio/cloud_sync/issues
+topics:
+  - s3
+  - aws
+  - sync
+  - storage
+
+environment:
+  sdk: ^3.6.0
+
+dependencies:
+  cloud_sync_core: ^0.1.0
+  crypto: ^3.0.6
+  http: ^1.4.0
+  meta: ^1.16.0
+  xml: ^6.5.0
+
+dev_dependencies:
+  lints: ^5.1.0
+  test: ^1.25.0
