@@ -77,14 +77,10 @@ make release PKG=drive   # or: core | s3 | box
 
 ## Next
 
-1. Configure OIDC trusted publishing on each of the 4 packages on pub.dev.
-   Admin → Automated publishing → repo `arcanelabsio/cloud_sync`, tag pattern
-   `cloud_sync_<pkg>-v{{version}}`.
-2. Replace the placeholder step in `.github/workflows/publish.yaml` with
-   `dart pub publish --force` so tagged releases auto-publish.
-3. Freeze pub.dev `drive_sync_flutter 1.2.0` — add deprecation note pointing
-   at `cloud_sync_drive`.
+1. Freeze pub.dev `drive_sync_flutter 1.2.0` — add deprecation note pointing
+   at `cloud_sync_drive` (manual pub.dev admin action).
 
 ## Last updated
 
-2026-04-18 — All 4 packages published at 0.1.1. Make-based release workflow in place.
+2026-04-18 — All 4 packages published at 0.1.1. OIDC-backed auto-publish
+wired end-to-end. Next `make release PKG=<pkg>` will publish via CI.

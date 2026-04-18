@@ -61,39 +61,12 @@ jobs:
         working-directory: packages/${{ steps.parse.outputs.package }}
         run: dart pub publish --dry-run
 
-      # ----------------------------------------------------------------------
-      # AUTHENTICATION — TO BE FINALIZED
-      # ----------------------------------------------------------------------
-      # The actual publish step depends on the auth method chosen:
-      #
-      # Option A — OIDC trusted publishing (recommended):
-      #   Each package on pub.dev is pre-configured under
-      #   "Admin → Automated publishing" to trust this repo for tag pattern
-      #   "<package>-v{{version}}". Then `dart pub publish` inherits the
-      #   short-lived OIDC token from the GitHub Actions runtime automatically
-      #   (because `permissions: id-token: write` is set above).
-      #
-      #   Add at the end of this job:
-      #       - name: Publish to pub.dev
-      #         working-directory: packages/${{ steps.parse.outputs.package }}
-      #         run: dart pub publish --force
-      #
-      # Option B — static credentials:
-      #   Store PUB_CREDENTIALS_JSON as a repo secret (generated once via
-      #   `dart pub token add https://pub.dev` on a trusted machine).
-      #   Add at the end of this job:
-      #       - name: Write pub credentials
-      #         run: |
-      #           mkdir -p ~/.config/dart
-      #           echo '${{ secrets.PUB_CREDENTIALS_JSON }}' > ~/.config/dart/pub-credentials.json
-      #       - name: Publish to pub.dev
-      #         working-directory: packages/${{ steps.parse.outputs.package }}
-      #         run: dart pub publish --force
-      # ----------------------------------------------------------------------
-
-      - name: Publish placeholder (AUTH METHOD PENDING)
-        run: |
-          echo "::warning::Publish auth method not yet finalized."
-          echo "::warning::Choose OIDC trusted publishing or static credentials,"
-          echo "::warning::then replace this step per the block above."
-          echo "Ready to publish: ${{ steps.parse.outputs.package }} @ ${{ steps.parse.outputs.version }}"
+      # OIDC trusted publishing is configured per-package on pub.dev
+      # (Admin → Automated publishing → repo arcanelabsio/cloud_sync,
+      #  tag pattern <package>-v{{version}}). The dart-lang/setup-dart
+      # action + `id-token: write` permission above are what let
+      # `dart pub publish` pick up the short-lived OIDC token from the
+      # GitHub Actions runtime. No secrets to manage.
+      - name: Publish to pub.dev
+        working-directory: packages/${{ steps.parse.outputs.package }}
+        run: dart pub publish --force
