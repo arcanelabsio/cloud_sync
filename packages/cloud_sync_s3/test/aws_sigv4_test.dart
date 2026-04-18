@@ -16,7 +16,8 @@ void main() {
     const service = 's3';
     final timestamp = DateTime.utc(2013, 5, 24, 0, 0, 0);
 
-    test('computes expected Authorization header for GET Object with Range', () {
+    test('computes expected Authorization header for GET Object with Range',
+        () {
       final uri = Uri.parse(
         'https://examplebucket.s3.amazonaws.com/test.txt',
       );

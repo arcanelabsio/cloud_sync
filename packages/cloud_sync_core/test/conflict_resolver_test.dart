@@ -5,19 +5,20 @@ void main() {
   SyncConflict makeConflict({
     required DateTime localTime,
     required DateTime remoteTime,
-  }) => SyncConflict(
-    path: 'data.json',
-    local: SyncFileEntry(
-      path: 'data.json',
-      sha256: 'local_hash',
-      lastModified: localTime,
-    ),
-    remote: SyncFileEntry(
-      path: 'data.json',
-      sha256: 'remote_hash',
-      lastModified: remoteTime,
-    ),
-  );
+  }) =>
+      SyncConflict(
+        path: 'data.json',
+        local: SyncFileEntry(
+          path: 'data.json',
+          sha256: 'local_hash',
+          lastModified: localTime,
+        ),
+        remote: SyncFileEntry(
+          path: 'data.json',
+          sha256: 'remote_hash',
+          lastModified: remoteTime,
+        ),
+      );
 
   group('ConflictResolver — newerWins', () {
     late ConflictResolver resolver;

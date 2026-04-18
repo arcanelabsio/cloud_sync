@@ -47,7 +47,8 @@ class AwsSigV4 {
 
     final payloadHash = sha256.convert(payload).toString();
 
-    final host = uri.host + (uri.hasPort && !_isDefaultPort(uri) ? ':${uri.port}' : '');
+    final host =
+        uri.host + (uri.hasPort && !_isDefaultPort(uri) ? ':${uri.port}' : '');
     final headersToSign = <String, String>{
       'host': host,
       'x-amz-date': amzDate,
@@ -121,8 +122,8 @@ class AwsSigV4 {
     required Map<String, String> signedHeaderMap,
     required String payloadHash,
   }) {
-    final sortedNames = signedHeaderMap.keys.map((k) => k.toLowerCase()).toList()
-      ..sort();
+    final sortedNames =
+        signedHeaderMap.keys.map((k) => k.toLowerCase()).toList()..sort();
     final lowered = signedHeaderMap.map(
       (k, v) => MapEntry(k.toLowerCase(), v.trim()),
     );

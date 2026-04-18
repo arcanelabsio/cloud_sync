@@ -75,7 +75,8 @@ void main() {
       );
     });
 
-    test('uploads version (replaces existing) when file already exists', () async {
+    test('uploads version (replaces existing) when file already exists',
+        () async {
       final requests = <http.BaseRequest>[];
       final client = MockClient((req) async {
         requests.add(req);
@@ -95,8 +96,7 @@ void main() {
             200,
           );
         }
-        if (req.method == 'POST' &&
-            url == '$uploadUrl/files/500/content') {
+        if (req.method == 'POST' && url == '$uploadUrl/files/500/content') {
           return http.Response(
             jsonEncode({
               'entries': [
@@ -124,7 +124,8 @@ void main() {
       expect(uploadHit, isTrue);
     });
 
-    test('falls back to PUT JSON Patch when metadata POST returns 409', () async {
+    test('falls back to PUT JSON Patch when metadata POST returns 409',
+        () async {
       final metadataRequests = <http.BaseRequest>[];
       final client = MockClient((req) async {
         final url = req.url.toString();

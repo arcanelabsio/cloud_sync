@@ -122,7 +122,8 @@ void main() {
 </ListBucketResult>''';
 
       final result = S3ListParser.parse(xml, prefix: 'backups');
-      expect(result.files.keys, unorderedEquals(['data.json', 'nested/file.json']));
+      expect(result.files.keys,
+          unorderedEquals(['data.json', 'nested/file.json']));
     });
 
     test('accepts prefix with or without trailing slash', () {

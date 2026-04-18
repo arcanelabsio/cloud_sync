@@ -17,7 +17,7 @@ class DriveAuthClient extends http.BaseClient {
 
   /// Create an auth client from a map of headers (typically from `account.authHeaders`).
   DriveAuthClient(this._headers, {http.Client? inner})
-    : _inner = inner ?? http.Client();
+      : _inner = inner ?? http.Client();
 
   /// Create an auth client from an async headers future.
   static Future<DriveAuthClient> fromAccount(

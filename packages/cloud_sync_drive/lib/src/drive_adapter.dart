@@ -133,8 +133,7 @@ class DriveAdapter implements StorageAdapter {
   /// Escape a value for use in Drive API query strings.
   /// Drive queries use single-quoted strings (`name = 'value'`);
   /// this escapes embedded single quotes to prevent query injection.
-  static String _escapeDriveQuery(String value) =>
-      value.replaceAll("'", "\\'");
+  static String _escapeDriveQuery(String value) => value.replaceAll("'", "\\'");
 
   // ---------- Error mapping ----------
 
@@ -147,8 +146,7 @@ class DriveAdapter implements StorageAdapter {
       if (e.status == 403 || e.status == 401) {
         throw DriveScopeError(
           declaredScope: scope,
-          message:
-              'Drive API returned ${e.status} (${e.message}). The auth '
+          message: 'Drive API returned ${e.status} (${e.message}). The auth '
               'client likely does not have the required OAuth scope for '
               'this adapter mode (declared: $scope). Verify the '
               'http.Client was obtained with the matching scope.',
@@ -280,14 +278,12 @@ class DriveAdapter implements StorageAdapter {
     }
 
     final fileId = result.files!.first.id!;
-    final media =
-        await _guard(
-              () => _driveApi.files.get(
-                fileId,
-                downloadOptions: drive.DownloadOptions.fullMedia,
-              ),
-            )
-            as drive.Media;
+    final media = await _guard(
+      () => _driveApi.files.get(
+        fileId,
+        downloadOptions: drive.DownloadOptions.fullMedia,
+      ),
+    ) as drive.Media;
 
     final bytes = <int>[];
     await for (final chunk in media.stream) {

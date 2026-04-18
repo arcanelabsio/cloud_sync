@@ -79,7 +79,6 @@ class DriveScopeError extends Error {
   });
 
   @override
-  String toString() =>
-      'DriveScopeError(declared=$declaredScope): $message'
+  String toString() => 'DriveScopeError(declared=$declaredScope): $message'
       '${cause != null ? '\nCaused by: $cause' : ''}';
 }

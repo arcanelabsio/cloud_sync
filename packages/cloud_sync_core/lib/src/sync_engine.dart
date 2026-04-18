@@ -21,8 +21,8 @@ class SyncEngine {
     required this.adapter,
     ManifestDiffer? differ,
     ConflictResolver? resolver,
-  }) : differ = differ ?? ManifestDiffer(),
-       resolver = resolver ?? const ConflictResolver();
+  })  : differ = differ ?? ManifestDiffer(),
+        resolver = resolver ?? const ConflictResolver();
 
   /// Build a remote manifest, computing sha256 by downloading content
   /// when the adapter doesn't provide checksums.

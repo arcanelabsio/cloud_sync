@@ -16,7 +16,7 @@ environment:
 
 dependencies:
   cloud_sync_core: ^0.1.0
-  googleapis: ^14.0.0
+  googleapis: ^16.0.0
   http: ^1.4.0
 
 dev_dependencies:

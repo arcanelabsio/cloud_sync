@@ -19,15 +19,15 @@ class MockStorageAdapter implements StorageAdapter {
 
   @override
   Future<Map<String, RemoteFileInfo>> listFiles() async => files.map(
-    (path, bytes) => MapEntry(
-      path,
-      RemoteFileInfo(
-        path: path,
-        lastModified: timestamps[path] ?? DateTime(2026, 4, 8),
-        sizeBytes: bytes.length,
-      ),
-    ),
-  );
+        (path, bytes) => MapEntry(
+          path,
+          RemoteFileInfo(
+            path: path,
+            lastModified: timestamps[path] ?? DateTime(2026, 4, 8),
+            sizeBytes: bytes.length,
+          ),
+        ),
+      );
 
   @override
   Future<void> uploadFile(String remotePath, List<int> content) async {
@@ -304,7 +304,8 @@ void main() {
       expect(local.files.containsKey('updated_remote.json'), true);
     });
 
-    test('manifest differ feeds directly into engine with correct semantics', () {
+    test('manifest differ feeds directly into engine with correct semantics',
+        () {
       final differ = ManifestDiffer();
       final local = SyncManifest(
         files: {
@@ -452,11 +453,11 @@ class _FailingAdapter implements StorageAdapter {
 
   @override
   Future<Map<String, RemoteFileInfo>> listFiles() async => files.map(
-    (k, v) => MapEntry(
-      k,
-      RemoteFileInfo(path: k, lastModified: DateTime(2026, 4, 8)),
-    ),
-  );
+        (k, v) => MapEntry(
+          k,
+          RemoteFileInfo(path: k, lastModified: DateTime(2026, 4, 8)),
+        ),
+      );
 
   @override
   Future<void> uploadFile(String path, List<int> content) async {

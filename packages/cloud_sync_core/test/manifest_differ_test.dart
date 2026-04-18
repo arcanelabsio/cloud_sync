@@ -9,15 +9,15 @@ void main() {
   });
 
   SyncFileEntry entry(String path, {String sha = 'abc123'}) => SyncFileEntry(
-    path: path,
-    sha256: sha,
-    lastModified: DateTime(2026, 4, 8),
-  );
+        path: path,
+        sha256: sha,
+        lastModified: DateTime(2026, 4, 8),
+      );
 
   SyncManifest manifest(List<SyncFileEntry> entries) => SyncManifest(
-    files: {for (final e in entries) e.path: e},
-    lastSynced: DateTime(2026, 4, 8),
-  );
+        files: {for (final e in entries) e.path: e},
+        lastSynced: DateTime(2026, 4, 8),
+      );
 
   group('ManifestDiffer', () {
     test('empty vs empty → no changes', () {

@@ -57,9 +57,8 @@ class S3ListParser {
     }
 
     final isTruncated = _childText(root, 'IsTruncated') == 'true';
-    final token = isTruncated
-        ? _childText(root, 'NextContinuationToken')
-        : null;
+    final token =
+        isTruncated ? _childText(root, 'NextContinuationToken') : null;
 
     return S3ListResponse(files: files, nextContinuationToken: token);
   }

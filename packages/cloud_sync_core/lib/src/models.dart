@@ -24,16 +24,16 @@ class SyncFileEntry {
       );
 
   Map<String, dynamic> toJson() => {
-    'path': path,
-    'sha256': sha256,
-    'lastModified': lastModified.toIso8601String(),
-  };
+        'path': path,
+        'sha256': sha256,
+        'lastModified': lastModified.toIso8601String(),
+      };
 
   factory SyncFileEntry.fromJson(Map<String, dynamic> json) => SyncFileEntry(
-    path: json['path'] as String,
-    sha256: json['sha256'] as String,
-    lastModified: DateTime.parse(json['lastModified'] as String),
-  );
+        path: json['path'] as String,
+        sha256: json['sha256'] as String,
+        lastModified: DateTime.parse(json['lastModified'] as String),
+      );
 
   @override
   bool operator ==(Object other) =>
@@ -55,14 +55,14 @@ class SyncManifest {
   const SyncManifest({required this.files, required this.lastSynced});
 
   factory SyncManifest.empty() => SyncManifest(
-    files: {},
-    lastSynced: DateTime.fromMillisecondsSinceEpoch(0),
-  );
+        files: {},
+        lastSynced: DateTime.fromMillisecondsSinceEpoch(0),
+      );
 
   Map<String, dynamic> toJson() => {
-    'files': files.map((k, v) => MapEntry(k, v.toJson())),
-    'lastSynced': lastSynced.toIso8601String(),
-  };
+        'files': files.map((k, v) => MapEntry(k, v.toJson())),
+        'lastSynced': lastSynced.toIso8601String(),
+      };
 
   factory SyncManifest.fromJson(Map<String, dynamic> json) {
     final filesMap = (json['files'] as Map<String, dynamic>).map(

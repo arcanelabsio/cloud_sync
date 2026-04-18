@@ -34,10 +34,10 @@ class S3Adapter implements StorageAdapter {
     required S3Credentials credentials,
     http.Client? innerClient,
   }) : _httpClient = S3AuthClient(
-         config: config,
-         credentials: credentials,
-         inner: innerClient,
-       );
+          config: config,
+          credentials: credentials,
+          inner: innerClient,
+        );
 
   /// Test-only constructor that skips SigV4 signing. Use when driving the
   /// adapter with a mock HTTP client to assert request shape without having

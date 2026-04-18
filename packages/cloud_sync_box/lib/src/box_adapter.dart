@@ -25,7 +25,7 @@ class BoxAdapter implements StorageAdapter {
   /// wrapping an OAuth2 Bearer token, or a custom client implementing JWT
   /// App Auth). The adapter does not manage token lifecycle.
   BoxAdapter({required this.config, required http.Client httpClient})
-    : _httpClient = httpClient {
+      : _httpClient = httpClient {
     _resolver = BoxPathResolver(
       httpClient: _httpClient,
       baseUrl: config.baseUrl,

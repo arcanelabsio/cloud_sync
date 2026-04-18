@@ -12,7 +12,9 @@ void main() {
       final url = req.url.toString();
       // Strip query params for matching, but preserve them for assertions
       final pathOnly = Uri.parse(url).replace(queryParameters: null).toString();
-      return byUrl[url] ?? byUrl[pathOnly] ?? http.Response('not mocked: $url', 500);
+      return byUrl[url] ??
+          byUrl[pathOnly] ??
+          http.Response('not mocked: $url', 500);
     });
   }
 
@@ -37,24 +39,24 @@ void main() {
       final client = handlerWith({
         '$baseUrl/folders/0/items?offset=0&limit=1000&fields=id,name,type,size,modified_at':
             http.Response(
-              itemsJson([
-                {
-                  'id': '100',
-                  'name': 'a.json',
-                  'type': 'file',
-                  'size': 10,
-                  'modified_at': '2026-04-18T10:00:00Z',
-                },
-                {
-                  'id': '101',
-                  'name': 'b.json',
-                  'type': 'file',
-                  'size': 20,
-                  'modified_at': '2026-04-18T11:00:00Z',
-                },
-              ]),
-              200,
-            ),
+          itemsJson([
+            {
+              'id': '100',
+              'name': 'a.json',
+              'type': 'file',
+              'size': 10,
+              'modified_at': '2026-04-18T10:00:00Z',
+            },
+            {
+              'id': '101',
+              'name': 'b.json',
+              'type': 'file',
+              'size': 20,
+              'modified_at': '2026-04-18T11:00:00Z',
+            },
+          ]),
+          200,
+        ),
       });
       final resolver = BoxPathResolver(
         httpClient: client,
@@ -72,30 +74,30 @@ void main() {
       final client = handlerWith({
         '$baseUrl/folders/0/items?offset=0&limit=1000&fields=id,name,type,size,modified_at':
             http.Response(
-              itemsJson([
-                {
-                  'id': '200',
-                  'name': 'backups',
-                  'type': 'folder',
-                  'size': 0,
-                  'modified_at': '2026-04-18T10:00:00Z',
-                },
-              ]),
-              200,
-            ),
+          itemsJson([
+            {
+              'id': '200',
+              'name': 'backups',
+              'type': 'folder',
+              'size': 0,
+              'modified_at': '2026-04-18T10:00:00Z',
+            },
+          ]),
+          200,
+        ),
         '$baseUrl/folders/200/items?offset=0&limit=1000&fields=id,name,type,size,modified_at':
             http.Response(
-              itemsJson([
-                {
-                  'id': '201',
-                  'name': 'data.json',
-                  'type': 'file',
-                  'size': 42,
-                  'modified_at': '2026-04-18T10:30:00Z',
-                },
-              ]),
-              200,
-            ),
+          itemsJson([
+            {
+              'id': '201',
+              'name': 'data.json',
+              'type': 'file',
+              'size': 42,
+              'modified_at': '2026-04-18T10:30:00Z',
+            },
+          ]),
+          200,
+        ),
       });
       final resolver = BoxPathResolver(
         httpClient: client,
@@ -182,17 +184,17 @@ void main() {
       final client = handlerWith({
         '$baseUrl/folders/0/items?offset=0&limit=1000&fields=id,name,type,size,modified_at':
             http.Response(
-              itemsJson([
-                {
-                  'id': '300',
-                  'name': 'backups',
-                  'type': 'folder',
-                  'size': 0,
-                  'modified_at': '2026-04-18T10:00:00Z',
-                },
-              ]),
-              200,
-            ),
+          itemsJson([
+            {
+              'id': '300',
+              'name': 'backups',
+              'type': 'folder',
+              'size': 0,
+              'modified_at': '2026-04-18T10:00:00Z',
+            },
+          ]),
+          200,
+        ),
         '$baseUrl/folders/300/items?offset=0&limit=1000&fields=id,name,type,size,modified_at':
             http.Response(itemsJson([]), 200),
       });

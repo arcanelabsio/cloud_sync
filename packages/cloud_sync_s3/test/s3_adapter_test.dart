@@ -148,7 +148,8 @@ void main() {
   group('S3Adapter.downloadFile', () {
     test('GETs object URI and returns body bytes', () async {
       final client = mockClient(
-        (req) async => http.Response.bytes(utf8.encode('{"hello":"world"}'), 200),
+        (req) async =>
+            http.Response.bytes(utf8.encode('{"hello":"world"}'), 200),
       );
       final adapter = S3Adapter.withHttpClient(
         config: config,
@@ -225,7 +226,8 @@ void main() {
       final requests = <http.BaseRequest>[];
       final client = mockClient((req) async {
         requests.add(req);
-        if (req.method == 'GET' && req.url.queryParameters['list-type'] == '2') {
+        if (req.method == 'GET' &&
+            req.url.queryParameters['list-type'] == '2') {
           return http.Response(listResponse, 200);
         }
         if (req.method == 'HEAD' && req.url.path == '/a.json') {

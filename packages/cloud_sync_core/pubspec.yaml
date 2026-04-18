@@ -1,8 +1,8 @@
 name: cloud_sync_core
 description: >-
-  Storage-agnostic core for the cloud_sync family. Defines the StorageAdapter
-  interface, sync engine, manifest differ, conflict resolver, and SyncClient.
-  No cloud provider logic lives here — implement StorageAdapter to add a backend.
+  Storage-agnostic core for the cloud_sync family. Defines StorageAdapter,
+  SyncEngine, SyncClient, ManifestDiffer, and conflict resolution — shared
+  by every backend adapter.
 version: 0.1.0
 repository: https://github.com/arcanelabsio/cloud_sync
 issue_tracker: https://github.com/arcanelabsio/cloud_sync/issues
